@@ -41,7 +41,7 @@ public class Rules extends javax.swing.JFrame {
         Lbl_Conse = new javax.swing.JLabel();
         Btn_AddRule = new javax.swing.JButton();
         Pnl_Edit = new javax.swing.JPanel();
-        Cbx_Rules = new javax.swing.JComboBox<>();
+        Cbx_Rules = new javax.swing.JComboBox<String>();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         Lbl_Edit_Ante = new javax.swing.JLabel();
@@ -80,22 +80,21 @@ public class Rules extends javax.swing.JFrame {
             Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_AddLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_AddLayout.createSequentialGroup()
                         .addComponent(Lbl_Ante)
                         .addGap(18, 18, 18)
                         .addComponent(TxF_Ante, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(Pnl_AddLayout.createSequentialGroup()
-                        .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Lbl_Conse)
-                            .addComponent(Btn_AddRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Lbl_Conse)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Pnl_AddLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TxF_Conse, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(224, Short.MAX_VALUE))
+                        .addComponent(TxF_Conse, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Pnl_AddLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(Btn_AddRule, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         Pnl_AddLayout.setVerticalGroup(
             Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +114,7 @@ public class Rules extends javax.swing.JFrame {
 
         TbP_Rules.addTab("Agregar", Pnl_Add);
 
-        Cbx_Rules.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listado de Reglas", "Item 2", "Item 3", "Item 4" }));
+        Cbx_Rules.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Listado de Reglas", "Item 2", "Item 3", "Item 4" }));
 
         Lbl_Edit_Ante.setText("Antdecendente");
 
