@@ -5,6 +5,9 @@
  */
 package proyectoia;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,10 +21,14 @@ public class Rules extends javax.swing.JFrame {
      * Creates new form Rules
      */
     private JFrame MP;
-    public Rules(JFrame MenuPrincipal) {
+    private c_ManagerFile MF;
+    public Rules(JFrame MenuPrincipal){
         initComponents();
         MP=MenuPrincipal;
+        MF = new c_ManagerFile();
+        MF.m_updateTable(Tbl_Rules,Cbx_Rules);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,12 +41,13 @@ public class Rules extends javax.swing.JFrame {
 
         TbP_Rules = new javax.swing.JTabbedPane();
         Pnl_Add = new javax.swing.JPanel();
-        Btn_Cancelar = new javax.swing.JButton();
         TxF_Conse = new javax.swing.JTextField();
         TxF_Ante = new javax.swing.JTextField();
         Lbl_Ante = new javax.swing.JLabel();
         Lbl_Conse = new javax.swing.JLabel();
         Btn_AddRule = new javax.swing.JButton();
+        Lbl_Relacion = new javax.swing.JLabel();
+        Cbx_Rela = new javax.swing.JComboBox<>();
         Pnl_Edit = new javax.swing.JPanel();
         Cbx_Rules = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
@@ -47,82 +55,92 @@ public class Rules extends javax.swing.JFrame {
         Lbl_Edit_Ante = new javax.swing.JLabel();
         Lbl_Edit_Cpnse = new javax.swing.JLabel();
         Btn_Editar = new javax.swing.JButton();
+        Lbl_ListRules = new javax.swing.JLabel();
         Pnl_Del = new javax.swing.JPanel();
+        Btn_DelRule = new javax.swing.JButton();
+        SP_Table = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tbl_Rules = new javax.swing.JTable();
+        Btn_Regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agregar Nueva Regla");
 
-        Btn_Cancelar.setText("Cancelar");
-        Btn_Cancelar.setPreferredSize(new java.awt.Dimension(60, 24));
-        Btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_CancelarActionPerformed(evt);
-            }
-        });
+        Lbl_Ante.setText("Antecedente:");
 
-        Lbl_Ante.setText("Antecedente");
-
-        Lbl_Conse.setText("Consecuente");
+        Lbl_Conse.setText("Consecuente:");
 
         Btn_AddRule.setText("Agregar");
-        Btn_AddRule.setPreferredSize(new java.awt.Dimension(60, 24));
+        Btn_AddRule.setPreferredSize(new java.awt.Dimension(80, 24));
         Btn_AddRule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_AddRuleActionPerformed(evt);
             }
         });
 
+        Lbl_Relacion.setText("Relacion:");
+
+        Cbx_Rela.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "➙" }));
+
         javax.swing.GroupLayout Pnl_AddLayout = new javax.swing.GroupLayout(Pnl_Add);
         Pnl_Add.setLayout(Pnl_AddLayout);
         Pnl_AddLayout.setHorizontalGroup(
             Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_AddLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_AddLayout.createSequentialGroup()
-                        .addComponent(Lbl_Ante)
-                        .addGap(18, 18, 18)
-                        .addComponent(TxF_Ante, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Pnl_AddLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Lbl_Relacion)
                             .addComponent(Lbl_Conse)
-                            .addComponent(Btn_AddRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(Lbl_Ante))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Pnl_AddLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TxF_Conse, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(224, Short.MAX_VALUE))
+                            .addComponent(TxF_Conse, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxF_Ante, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Cbx_Rela, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(Pnl_AddLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(Btn_AddRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         Pnl_AddLayout.setVerticalGroup(
             Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_AddLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_Ante)
                     .addComponent(TxF_Ante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Lbl_Relacion)
+                    .addComponent(Cbx_Rela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_Conse)
                     .addComponent(TxF_Conse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(Pnl_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_AddRule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Btn_AddRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
 
         TbP_Rules.addTab("Agregar", Pnl_Add);
 
-        Cbx_Rules.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listado de Reglas", "Item 2", "Item 3", "Item 4" }));
+        Cbx_Rules.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reglas" }));
+        Cbx_Rules.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cbx_RulesActionPerformed(evt);
+            }
+        });
 
-        Lbl_Edit_Ante.setText("Antdecendente");
+        Lbl_Edit_Ante.setText("Antdecendente:");
 
-        Lbl_Edit_Cpnse.setText("Consecunete");
+        Lbl_Edit_Cpnse.setText("Consecunete:");
 
         Btn_Editar.setText("Editar");
-        Btn_Editar.setPreferredSize(new java.awt.Dimension(60, 24));
+        Btn_Editar.setPreferredSize(new java.awt.Dimension(80, 24));
+
+        Lbl_ListRules.setText("Reglas:");
 
         javax.swing.GroupLayout Pnl_EditLayout = new javax.swing.GroupLayout(Pnl_Edit);
         Pnl_Edit.setLayout(Pnl_EditLayout);
@@ -130,101 +148,152 @@ public class Rules extends javax.swing.JFrame {
             Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_EditLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
+                .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Lbl_Edit_Cpnse)
+                    .addComponent(Lbl_Edit_Ante)
+                    .addComponent(Lbl_ListRules))
                 .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_EditLayout.createSequentialGroup()
-                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lbl_Edit_Ante)
-                            .addComponent(Lbl_Edit_Cpnse))
-                        .addGap(34, 34, 34)
-                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
-                    .addComponent(Cbx_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(164, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_EditLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+                        .addComponent(Btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))
+                    .addGroup(Pnl_EditLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Cbx_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         Pnl_EditLayout.setVerticalGroup(
             Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_EditLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Cbx_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lbl_Edit_Ante))
-                .addGap(18, 18, 18)
-                .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lbl_Edit_Cpnse))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Pnl_EditLayout.createSequentialGroup()
+                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Cbx_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lbl_ListRules))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lbl_Edit_Ante))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lbl_Edit_Cpnse))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(Pnl_EditLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(Btn_Editar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
 
         TbP_Rules.addTab("Editar", Pnl_Edit);
 
+        Btn_DelRule.setText("Borrar");
+        Btn_DelRule.setPreferredSize(new java.awt.Dimension(80, 24));
+        Btn_DelRule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_DelRuleActionPerformed(evt);
+            }
+        });
+
         Tbl_Rules.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Num. Regla", "Antecedente", "Entonces", "Consecuente"
             }
         ));
         jScrollPane1.setViewportView(Tbl_Rules);
+
+        SP_Table.setViewportView(jScrollPane1);
 
         javax.swing.GroupLayout Pnl_DelLayout = new javax.swing.GroupLayout(Pnl_Del);
         Pnl_Del.setLayout(Pnl_DelLayout);
         Pnl_DelLayout.setHorizontalGroup(
             Pnl_DelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_DelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(Pnl_DelLayout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(Btn_DelRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
+            .addGroup(Pnl_DelLayout.createSequentialGroup()
+                .addComponent(SP_Table)
                 .addContainerGap())
         );
         Pnl_DelLayout.setVerticalGroup(
             Pnl_DelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_DelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addComponent(SP_Table, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_DelRule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         TbP_Rules.addTab("Eliminar", Pnl_Del);
+
+        Btn_Regresar.setText("Cancelar");
+        Btn_Regresar.setPreferredSize(new java.awt.Dimension(80, 24));
+        Btn_Regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_RegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(TbP_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Btn_Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(TbP_Rules)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(TbP_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Btn_Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CancelarActionPerformed
+    private void Btn_RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_RegresarActionPerformed
         MP.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_Btn_CancelarActionPerformed
+    }//GEN-LAST:event_Btn_RegresarActionPerformed
 
     private void Btn_AddRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddRuleActionPerformed
-        JOptionPane.showMessageDialog(rootPane, "Regla agregada");
+        try {
+            MF.m_writeMaster(TxF_Ante.getText().charAt(0), Cbx_Rela.getSelectedItem().toString().charAt(0), TxF_Conse.getText().charAt(0));
+            MF.m_updateTable(Tbl_Rules,Cbx_Rules);
+            JOptionPane.showMessageDialog(rootPane, "Regla agregada a BH", "Proceso completado", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Rules.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Btn_AddRuleActionPerformed
+
+    private void Btn_DelRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_DelRuleActionPerformed
+        int idxTablRls = Tbl_Rules.getSelectedRow();
+        if (idxTablRls!=-1)
+        {
+            JOptionPane.showMessageDialog(rootPane, Tbl_Rules.getSelectedRow());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una regla porfavor", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_Btn_DelRuleActionPerformed
+
+    private void Cbx_RulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cbx_RulesActionPerformed
+
+    }//GEN-LAST:event_Cbx_RulesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,19 +330,25 @@ public class Rules extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_AddRule;
-    private javax.swing.JButton Btn_Cancelar;
+    private javax.swing.JButton Btn_DelRule;
     private javax.swing.JButton Btn_Editar;
+    private javax.swing.JButton Btn_Regresar;
+    private javax.swing.JComboBox<String> Cbx_Rela;
     private javax.swing.JComboBox<String> Cbx_Rules;
     private javax.swing.JLabel Lbl_Ante;
     private javax.swing.JLabel Lbl_Conse;
     private javax.swing.JLabel Lbl_Edit_Ante;
     private javax.swing.JLabel Lbl_Edit_Cpnse;
+    private javax.swing.JLabel Lbl_ListRules;
+    private javax.swing.JLabel Lbl_Relacion;
     private javax.swing.JPanel Pnl_Add;
     private javax.swing.JPanel Pnl_Del;
     private javax.swing.JPanel Pnl_Edit;
+    private javax.swing.JScrollPane SP_Table;
     private javax.swing.JTabbedPane TbP_Rules;
     private javax.swing.JTable Tbl_Rules;
     private javax.swing.JTextField TxF_Ante;

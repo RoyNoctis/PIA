@@ -23,8 +23,8 @@ public class ProyectoIA extends javax.swing.JFrame {
     {
         Rules = new Rules(this);
         Rules.setVisible(false);
-        
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +38,7 @@ public class ProyectoIA extends javax.swing.JFrame {
         Btn_Infer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SISTEMA EXPERTO ACERCA DE ANFIBIOS");
+        setTitle("SISTEMA EXPERTO");
 
         Btn_AddRules.setText("Agregar Reglas");
         Btn_AddRules.addActionListener(new java.awt.event.ActionListener() {
