@@ -12,6 +12,7 @@ package proyectoia;
 public class ProyectoIA extends javax.swing.JFrame {
 
     private Rules Rules;
+    private Inferir Inferir;
     public ProyectoIA() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -23,6 +24,8 @@ public class ProyectoIA extends javax.swing.JFrame {
     {
         Rules = new Rules(this);
         Rules.setVisible(false);
+        Inferir = new Inferir(this);
+        Inferir.setVisible(false);
     }
     
     /**
@@ -49,6 +52,11 @@ public class ProyectoIA extends javax.swing.JFrame {
 
         Btn_Infer.setText("Inferir");
         Btn_Infer.setPreferredSize(new java.awt.Dimension(96, 24));
+        Btn_Infer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_InferActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,6 +87,12 @@ public class ProyectoIA extends javax.swing.JFrame {
         Rules.setLocationRelativeTo(null);
         this.setVisible(false);
     }//GEN-LAST:event_Btn_AddRulesActionPerformed
+
+    private void Btn_InferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_InferActionPerformed
+        Inferir.setVisible(true);
+        Inferir.setLocationRelativeTo(null);
+        this.setVisible(false);
+    }//GEN-LAST:event_Btn_InferActionPerformed
 
     /**
      * @param args the command line arguments
