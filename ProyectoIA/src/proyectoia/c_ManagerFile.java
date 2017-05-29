@@ -11,9 +11,9 @@ import java.io.RandomAccessFile;
 import java.util.LinkedList;
 import java.util.Scanner;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -53,40 +53,67 @@ public class c_ManagerFile
         }
     }
     
-    public void m_writeMaster(char Antecedente,char Relacion,char Consecuente) throws IOException
+    public boolean m_writeMaster(String Antecedente,char Relacion,String Consecuente) throws IOException
     {
-        //POSICIONA EL PUNTERO AL FINAL DE ULTIMO RECURSO
-        Master.seek(Master.length());
-        //BOOLEAN; SI ES LEGIBLE
-        Master.writeChar(' ');
+        if (Antecedente.length()==0 || Antecedente.length()>2 ||Consecuente.length()==0 || Consecuente.length()>2) {
+            return false;
+        }
+        else
+        {
+            //POSICIONA EL PUNTERO AL FINAL DE ULTIMO RECURSO
+            Master.seek(Master.length());
+            //BOOLEAN; SI ES LEGIBLE
+            Master.writeChar(' ');
 
-        //ESCRIBE LLAVE
-        Master.writeInt(Llave);
+            //ESCRIBE LLAVE
+            Master.writeInt(Llave);
 
-        //ESCRIBE ANTECEDENTE
-        Master.writeChar(Antecedente);
+            //ESCRIBE ANTECEDENTE
+            if (Antecedente.length()==1)
+            {
+                Master.writeChar(Antecedente.charAt(0));
+                Master.writeChar(' ');
+            }
+            if (Antecedente.length()==2)
+            {
+                Master.writeChar(Antecedente.charAt(0));
+                Master.writeChar(Antecedente.charAt(1));
+            }
 
-        //ESCRIBE RELACION
-        Master.writeChar(Relacion);
 
-        //ESCRIBE CONSECUENTE
-        Master.writeChar(Consecuente);
+            //ESCRIBE RELACION
+            Master.writeChar(Relacion);
 
-        /********************************
-                ESCRIBE INDICE
-        ********************************/
-        //ESCRIBE CAMPO BOOLEANO DE CAMPO DE LEGIBILIDA DEL REGISTRO
-        Indx.seek(Indx.length());
-        Indx.writeChar(' ');
+            //ESCRIBE CONSECUENTE
+            if (Consecuente.length()==1)
+            {
+                Master.writeChar(Consecuente.charAt(0));
+                Master.writeChar(' ');
+            }
+            if (Consecuente.length()==2)
+            {
+                Master.writeChar(Consecuente.charAt(0));
+                Master.writeChar(Consecuente.charAt(1));
+            }
 
-        //ESCRIBE LLAVE
-        Indx.writeInt(Llave);
-        Llave++;
+            /********************************
+                    ESCRIBE INDICE
+            ********************************/
+            //ESCRIBE CAMPO BOOLEANO DE CAMPO DE LEGIBILIDA DEL REGISTRO
+            Indx.seek(Indx.length());
+            Indx.writeChar(' ');
 
-        //ESCRIBE DIRECCION LOGICA
+            //ESCRIBE LLAVE
+            Indx.writeInt(Llave);
+            Llave++;
 
-        Indx.writeLong(Pointer);
-        Pointer=Master.getFilePointer();
+            //ESCRIBE DIRECCION LOGICA
+
+            Indx.writeLong(Pointer);
+            Pointer=Master.getFilePointer();
+            return true;
+        }
+        
     }
     
     public void m_updateTable(JTable TR,JComboBox Cb)
@@ -94,7 +121,6 @@ public class c_ManagerFile
         try
         {
             //TR.removeRowSelectionInterval(0, TR.getRowCount());
-            
             long ap_actual=0, ap_final;
             DefaultTableModel TMR = (DefaultTableModel)TR.getModel();
             m_clenaJTable(TMR);
@@ -108,25 +134,32 @@ public class c_ManagerFile
                 if (Master.readChar() == ' ')
                 {
                     int Llv=Master.readInt();
-                    char Ant=Master.readChar();
+                    String Ant=Master.readChar()+""+Master.readChar()+"";
                     char Rel=Master.readChar();
-                    char Con=Master.readChar();
+                    String Con=Master.readChar()+""+Master.readChar()+"";
                     TMR.addRow(new Object[] {Llv,Ant,Rel,Con});
                     Cb.addItem(Ant+""+Rel+""+Con);
                 }
                 else
                 {
+                    //LEE LLAVE
                     Master.readInt();
+                    //LEE ANTECEDENTE
                     Master.readChar();
+                    Master.readChar();
+                    
+                    //LEE RELACION
+                    Master.readChar();
+                    
+                    //LEE CONSECUENTE
                     Master.readChar();
                     Master.readChar();
                 }
-                Llave++;
                 ap_actual=Master.getFilePointer();
             }//Fin while
         }catch (IOException IOE)
         {
-            
+            JOptionPane.showMessageDialog(Cb, "Error en m_updateTable", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }

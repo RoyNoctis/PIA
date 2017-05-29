@@ -50,8 +50,8 @@ public class Rules extends javax.swing.JFrame {
         Cbx_Rela = new javax.swing.JComboBox<>();
         Pnl_Edit = new javax.swing.JPanel();
         Cbx_Rules = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        TxtF_EditAnte = new javax.swing.JTextField();
+        TxtF_EditConse = new javax.swing.JTextField();
         Lbl_Edit_Ante = new javax.swing.JLabel();
         Lbl_Edit_Cpnse = new javax.swing.JLabel();
         Btn_Editar = new javax.swing.JButton();
@@ -160,8 +160,8 @@ public class Rules extends javax.swing.JFrame {
                     .addGroup(Pnl_EditLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtF_EditConse, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtF_EditAnte, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Cbx_Rules, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -176,11 +176,11 @@ public class Rules extends javax.swing.JFrame {
                             .addComponent(Lbl_ListRules))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtF_EditAnte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Lbl_Edit_Ante))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Pnl_EditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtF_EditConse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Lbl_Edit_Cpnse))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Pnl_EditLayout.createSequentialGroup()
@@ -271,9 +271,16 @@ public class Rules extends javax.swing.JFrame {
 
     private void Btn_AddRuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddRuleActionPerformed
         try {
-            MF.m_writeMaster(TxF_Ante.getText().charAt(0), Cbx_Rela.getSelectedItem().toString().charAt(0), TxF_Conse.getText().charAt(0));
-            MF.m_updateTable(Tbl_Rules,Cbx_Rules);
-            JOptionPane.showMessageDialog(rootPane, "Regla agregada a BH", "Proceso completado", JOptionPane.INFORMATION_MESSAGE);
+            if (MF.m_writeMaster(TxF_Ante.getText(), Cbx_Rela.getSelectedItem().toString().charAt(0), TxF_Conse.getText()))
+            {
+                MF.m_updateTable(Tbl_Rules,Cbx_Rules);
+                JOptionPane.showMessageDialog(rootPane, "Regla agregada a BH", "Proceso completado", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(rootPane, "Sintaxis de Regla erronea", "Proceso incompleto", JOptionPane.ERROR_MESSAGE);
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(Rules.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -292,7 +299,13 @@ public class Rules extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_DelRuleActionPerformed
 
     private void Cbx_RulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cbx_RulesActionPerformed
-
+        
+        if (Cbx_Rules.getItemCount()>0)
+        {
+            String ComponentsRule[]=Cbx_Rules.getSelectedItem().toString().split("➙");
+            TxtF_EditAnte.setText(ComponentsRule[0]);
+            TxtF_EditConse.setText(ComponentsRule[1]);
+        }
     }//GEN-LAST:event_Cbx_RulesActionPerformed
 
     /**
@@ -353,8 +366,8 @@ public class Rules extends javax.swing.JFrame {
     private javax.swing.JTable Tbl_Rules;
     private javax.swing.JTextField TxF_Ante;
     private javax.swing.JTextField TxF_Conse;
+    private javax.swing.JTextField TxtF_EditAnte;
+    private javax.swing.JTextField TxtF_EditConse;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
